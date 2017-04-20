@@ -26,10 +26,12 @@ ev.py 식단
 
  <i class="icon-file"> 참조
 -------------------
+```
+**Note:** You can find more information:
 
-> **Note:** You can find more information:
-
-> - about **Control Evernote from the command line** in Windows [here][1]
-> - about **All things Evernote search** in "ENScript.exe shownotes /q" [here][2] 
+- about **Control Evernote from the command line** in Windows [here][1]
+- about **All things Evernote search** in "ENScript.exe shownotes /q" [here][2] 
   [1]: https://dev.evernote.com/doc/articles/enscript.php
   [2]: http://dev.evernote.com/doc/articles/search_grammar.php
+```
+  
