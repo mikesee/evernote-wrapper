@@ -1,20 +1,32 @@
-#enscript.exe wrapper
 import os
 import sys
 import subprocess
 import datetime
 
-def today(): #daynote of today create or open
-	f = open((datetime.date.today()).__format__("%y%m%d"), "w")
-	
+def today(): #daynote of today create or open(if exist)
+	date = (datetime.date.today()).__format__("%y%m%d")
 
-	
-	subprocess.check_call([ens_path, 'shownotes', '/q',  ], shell=False, stderr=subprocess.STDOUT)
+	try:
+		f = open(ev_prg_path + "\\note.txt", mode="r+") #note file open or create
+		data = f.read()
+		f.close()	
+	except:
+		f = open(ev_prg_path + "\\note.txt", mode="w+")
+		f.write(" ")
+		f.close()
+		subprocess.check_call([ens_path, 'createNote', '/s', ev_prg_path + '\\note.txt', '/n', 'day note', '/i', date]) #, shell=False, stderr=subprocess.STDOUT)
+		""" not bed
+		cmd = [ens_path, 'createNote', '/s', 'C:\\Program Files (x86)\\Evernote\\Evernote\\note.txt', '/n', 'day note', '/i', date]
+		fd_popen = subprocess.Popen(cmd, stdout=subprocess.PIPE).stdout
+		data = fd_popen.read().strip()
+		fd_popen.close()
+		"""
+	subprocess.check_call([ens_path, 'shownotes', '/q', date ], shell=False, stderr=subprocess.STDOUT)
 
-def open_note(): #include idpw, daynote 
+def open_note(): #Open note with query(sys.argv[1]). 
 	subprocess.check_call([ens_path, 'shownotes', '/q', sys.argv[1]], shell=False, stderr=subprocess.STDOUT) #open title notebook
 
-def open_ev(): #just evernote.exe open. because loader name is ev
+def open_ev(): #Just open evernote.exe. Because loader name is ev
 	try:
 		subprocess.check_call(ev_prg_path + "\evernote.exe"	, shell=False, stderr=subprocess.STDOUT)
 	except:
@@ -35,10 +47,9 @@ if __name__ == "__main__":
 	x86: C:\Program Files\Evernote\Evernote\
 	"""
 	
-	if (len(sys.argv) < 2):		
+	if (len(sys.argv) < 2): #ev
 		open_ev()
-	elif (sys.argv[1] == "t"):
+	elif (sys.argv[1] == "t"): #ev t
 		today()
-	else: #except anything. sys.argv[1] is note title
+	else: #anything. ignored over than "sys.argv[2]" 
 		open_note()
-		
