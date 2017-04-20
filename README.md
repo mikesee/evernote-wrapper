@@ -4,7 +4,7 @@ evernote wrapper with enscript.exe for me
 
 ----------
 
- <i class="icon-file"> 실행
+실행
 -------------
 - 에버노트(evernote.exe) 실행
 ```
@@ -24,7 +24,7 @@ ev.py 식단
 ----------
 
 
- <i class="icon-file"> 참조
+참조
 -------------------
 
 **Note:** You can find more information:
