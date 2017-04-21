@@ -1,6 +1,6 @@
-**evernote-wrapper**
+**Evernote-Wrapper**
 ===================
-evernote wrapper with enscript.exe for me
+Evernote wrapper with enscript.exe
 
 ----------
 
