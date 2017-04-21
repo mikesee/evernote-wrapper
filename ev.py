@@ -3,6 +3,12 @@ import sys
 import subprocess
 import datetime
 
+def open_ev(): #Just open evernote.exe. Because loader name is ev
+	try:
+		subprocess.check_call(ev_prg_path + "\evernote.exe"	, shell=False, stderr=subprocess.STDOUT)
+	except:
+		pass #print "except"
+
 def today(): #daynote of today create or open(if exist)
 	date = (datetime.date.today()).__format__("%y%m%d")
 
@@ -24,13 +30,7 @@ def today(): #daynote of today create or open(if exist)
 	subprocess.check_call([ens_path, 'shownotes', '/q', date ], shell=False, stderr=subprocess.STDOUT)
 
 def open_note(): #Open note with query(sys.argv[1]). 
-	subprocess.check_call([ens_path, 'shownotes', '/q', sys.argv[1]], shell=False, stderr=subprocess.STDOUT) #open title notebook
-
-def open_ev(): #Just open evernote.exe. Because loader name is ev
-	try:
-		subprocess.check_call(ev_prg_path + "\evernote.exe"	, shell=False, stderr=subprocess.STDOUT)
-	except:
-		pass #print "except"
+	subprocess.check_call([ens_path, 'shownotes', '/q', sys.argv[1]], shell=False, stderr=subprocess.STDOUT) 
 	
 if __name__ == "__main__":
 	ev_prg_path = ""
