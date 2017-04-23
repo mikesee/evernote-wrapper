@@ -12,23 +12,46 @@ def open_ev(): #Just open evernote.exe. Because loader name is ev
 def today(): #daynote of today create or open(if exist)
 	date = (datetime.date.today()).__format__("%y%m%d")
 
-	try:
-		f = open(ev_prg_path + "\\note.txt", mode="r+") #note file open or create
+	if os.path.isfile(ev_prg_path + "\\note.txt"):
+		print "note.txt is exist"
+		f = open(ev_prg_path + "\\note.txt", mode="r+")
 		data = f.read()
-		f.close()	
-	except:
+		f.close()
+
+		print "data: " + data
+
+		if data == date:
+			print "data == date"
+			subprocess.check_call([ens_path, 'shownotes', '/q', date ], shell=False, stderr=subprocess.STDOUT)
+		else:
+			print "overwrite and open note" 
+			f = open(ev_prg_path + "\\note.txt", mode="w+")
+			f.write(date) #date overwrite in note.txt
+			f.close()
+			subprocess.check_call([ens_path, 'createNote', '/s', ev_prg_path + '\\note.txt', '/n', 'day note', '/i', date]) #, shell=False, stderr=subprocess.STDOUT)
+			subprocess.check_call([ens_path, 'shownotes', '/q', date ], shell=False, stderr=subprocess.STDOUT)
+	else:
+		print "note.txt is not exist"
 		f = open(ev_prg_path + "\\note.txt", mode="w+")
-		f.write(" ")
+		f.write(date)
 		f.close()
 		subprocess.check_call([ens_path, 'createNote', '/s', ev_prg_path + '\\note.txt', '/n', 'day note', '/i', date]) #, shell=False, stderr=subprocess.STDOUT)
-		""" not bed
-		cmd = [ens_path, 'createNote', '/s', 'C:\\Program Files (x86)\\Evernote\\Evernote\\note.txt', '/n', 'day note', '/i', date]
-		fd_popen = subprocess.Popen(cmd, stdout=subprocess.PIPE).stdout
-		data = fd_popen.read().strip()
-		fd_popen.close()
-		"""
-	subprocess.check_call([ens_path, 'shownotes', '/q', date ], shell=False, stderr=subprocess.STDOUT)
+		subprocess.check_call([ens_path, 'shownotes', '/q', date ], shell=False, stderr=subprocess.STDOUT)
+	"""
+	except: #initial. because note.txt is not exist. so, r+ note.txt func is error.
+	print("ty1")
+	f = open(ev_prg_path + "\\note.txt", mode="w+")
+	f.write("1")
+	f.close()
+	subprocess.check_call([ens_path, 'createNote', '/s', ev_prg_path + '\\note.txt', '/n', 'day note', '/i', date]) #, shell=False, stderr=subprocess.STDOUT)
 
+	#not bed
+	cmd = [ens_path, 'createNote', '/s', 'C:\\Program Files (x86)\\Evernote\\Evernote\\note.txt', '/n', 'day note', '/i', date]
+	fd_popen = subprocess.Popen(cmd, stdout=subprocess.PIPE).stdout
+	data = fd_popen.read().strip()
+	fd_popen.close()
+	"""
+	
 def open_note(): #Open note with query(sys.argv[1]). 
 	subprocess.check_call([ens_path, 'shownotes', '/q', sys.argv[1]], shell=False, stderr=subprocess.STDOUT) 
 	
@@ -53,3 +76,4 @@ if __name__ == "__main__":
 		today()
 	else: #anything. ignored over than "sys.argv[2]" 
 		open_note()
+		
