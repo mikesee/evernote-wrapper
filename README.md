@@ -1,11 +1,15 @@
 **Evernote-Wrapper**
 ===================
-Evernote wrapper with enscript.exe
+Evernote wrapper with enscript.exe :bowtie:
 
 ----------
 
 실행
 -------------
+- Windows + R
+
+![asd](https://cloud.githubusercontent.com/assets/11265463/25363203/d38fd738-2993-11e7-93f0-66eabe9e444e.gif)
+
 - 에버노트(evernote.exe) 실행
 ```
 ev.py
