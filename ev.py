@@ -3,6 +3,18 @@ import sys
 import subprocess
 import datetime
 
+def create_and_show_note():
+	f = open(ev_prg_path + "\\note.txt", mode="w+")
+	f.write(" ")
+	f.close()
+	
+	subprocess.check_call([ens_path, 'createNote', '/s', ev_prg_path + '\\note.txt', '/n', 'day note', '/i', date])
+	subprocess.check_call([ens_path, 'shownotes', '/q', date], shell=False, stderr=subprocess.STDOUT)
+	
+	f = open(ev_prg_path + "\\note.txt", mode="w+")
+	f.write(date) #date overwrite in note.txt
+	f.close()
+
 def open_ev(): #Just open evernote.exe. Because loader name is ev
 	try:
 		subprocess.check_call(ev_prg_path + "\evernote.exe"	, shell=False, stderr=subprocess.STDOUT)
@@ -10,8 +22,6 @@ def open_ev(): #Just open evernote.exe. Because loader name is ev
 		pass #print "except"
 
 def today(): #daynote of today create or open(if exist)
-	date = (datetime.date.today()).__format__("%y%m%d")
-
 	if os.path.isfile(ev_prg_path + "\\note.txt"):
 		print "note.txt is exist"
 		f = open(ev_prg_path + "\\note.txt", mode="r+")
@@ -22,41 +32,21 @@ def today(): #daynote of today create or open(if exist)
 
 		if data == date:
 			print "data == date"
-			subprocess.check_call([ens_path, 'shownotes', '/q', date ], shell=False, stderr=subprocess.STDOUT)
+			subprocess.check_call([ens_path, 'shownotes', '/q', date ])
 		else:
 			print "overwrite and open note" 
-			f = open(ev_prg_path + "\\note.txt", mode="w+")
-			f.write(date) #date overwrite in note.txt
-			f.close()
-			subprocess.check_call([ens_path, 'createNote', '/s', ev_prg_path + '\\note.txt', '/n', 'day note', '/i', date]) #, shell=False, stderr=subprocess.STDOUT)
-			subprocess.check_call([ens_path, 'shownotes', '/q', date ], shell=False, stderr=subprocess.STDOUT)
+			create_and_show_note()
 	else:
 		print "note.txt is not exist"
-		f = open(ev_prg_path + "\\note.txt", mode="w+")
-		f.write(date)
-		f.close()
-		subprocess.check_call([ens_path, 'createNote', '/s', ev_prg_path + '\\note.txt', '/n', 'day note', '/i', date]) #, shell=False, stderr=subprocess.STDOUT)
-		subprocess.check_call([ens_path, 'shownotes', '/q', date ], shell=False, stderr=subprocess.STDOUT)
-	"""
-	except: #initial. because note.txt is not exist. so, r+ note.txt func is error.
-	print("ty1")
-	f = open(ev_prg_path + "\\note.txt", mode="w+")
-	f.write("1")
-	f.close()
-	subprocess.check_call([ens_path, 'createNote', '/s', ev_prg_path + '\\note.txt', '/n', 'day note', '/i', date]) #, shell=False, stderr=subprocess.STDOUT)
+		create_and_show_note()
 
-	#not bed
-	cmd = [ens_path, 'createNote', '/s', 'C:\\Program Files (x86)\\Evernote\\Evernote\\note.txt', '/n', 'day note', '/i', date]
-	fd_popen = subprocess.Popen(cmd, stdout=subprocess.PIPE).stdout
-	data = fd_popen.read().strip()
-	fd_popen.close()
-	"""
-	
 def open_note(): #Open note with query(sys.argv[1]). 
 	subprocess.check_call([ens_path, 'shownotes', '/q', sys.argv[1]], shell=False, stderr=subprocess.STDOUT) 
 	
 if __name__ == "__main__":
+	date = (datetime.date.today()).__format__("%y%m%d")
 	ev_prg_path = ""
+
 	if os.environ.get("PROGRAMFILES(X86)") is None: #this case is 32bit 
 	    ev_prg_path = os.environ.get("PROGRAMFILES")
 	else:
