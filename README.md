@@ -33,8 +33,10 @@ ev.py 식단
 > - about **All things Evernote search** in "ENScript.exe shownotes /q" [here](http://dev.evernote.com/doc/articles/search_grammar.php) 
 
 
+Author
 -------------------
 Lee JunHwan([ur0n2](https://ur0n2.com))
+
 
 License
 -------------------
