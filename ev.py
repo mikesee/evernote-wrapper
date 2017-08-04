@@ -62,7 +62,7 @@ if __name__ == "__main__":
 	
 	if (len(sys.argv) < 2): #ev
 		open_ev()
-	elif (sys.argv[1] == "t"): #ev t
+	elif (sys.argv[1] == "t" or sys.argv[1] == "T"): #ev t EV T
 		today()
 	else: #anything. ignored over than "sys.argv[2]" 
 		open_note()
